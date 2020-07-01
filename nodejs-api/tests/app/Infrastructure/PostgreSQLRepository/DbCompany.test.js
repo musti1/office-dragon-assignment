@@ -3,8 +3,6 @@ const {it, describe} = require('mocha');
 
 const DbCompanyRepository = require('../../../../app/Infrastructure/PostgreSQLRepository/DbCompanyRepository');
 const Company = require('../../../../app/Domain/Core/Company');
-const email = 'admin@test.com';
-const password = 'test123';
 
 describe('DbCompany Repository Test', () => {
   it('add()', async () => {
