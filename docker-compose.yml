@@ -1,0 +1,49 @@
+version: '3'
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: "office_dragon"
+      POSTGRES_PASSWORD: 'postgres'
+    volumes:
+      - database_data:/var/lib/postgresql/data
+  nodejs-api:
+    container_name: nodejs-server
+    restart: always
+    build: ./nodejs-api
+    ports:
+      - '4000:4000'
+    volumes:
+      - ./nodejs-api:/usr/src/app/nodejs-api
+    links:
+      - db
+    environment:
+      - POSTGRE_SQL_HOST=db
+      - POSTGRE_SQL_PORT=5432
+      - POSTGRE_SQL_DB=office_dragon
+      - POSTGRE_SQL_USER=postgres
+      - POSTGRE_SQL_PASS=postgres
+        POSTGRE_SQL_HOST=localhost
+  dotnet-api:
+    container_name: dotnet-server
+    restart: always
+    build: ./dotnet-api
+    ports:
+      - '5000:5000'
+    volumes:
+      - ./nodejs-api:/usr/src/app/dotnet-api
+    links:
+      - db
+  client:
+    container_name: client
+    restart: always
+    build: ./client
+    ports:
+      - '3000:3000'
+
+volumes:
+  database_data:
+    driver: local
