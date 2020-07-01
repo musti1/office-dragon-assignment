@@ -79,8 +79,7 @@ class DbCompanyRepository {
    * @param {string} term
    * @return {Company}
    */
-  static
-  async findByCompanyId(companyId, term) {
+  static async findByCompanyId(companyId, term) {
     try {
       const companyObj = await companyModel.findOne({
         where: {
